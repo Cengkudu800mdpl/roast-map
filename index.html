@@ -2,31 +2,48 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ROAST MAP - Smart Glasses for Coffee Roasters | DoraHacks</title>
+<title>ROAST MAP - DoraHacks</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
-body{background:#0a0a0a;color:#fff;text-align:center}
-.hero{padding:28px 15px;background:linear-gradient(180deg,#ff6b00,#0a0a0a)}
-.hero h1{font-size:46px}.hero h1 span{color:#ffcc00}
-.pill{display:inline-block;background:#fff;color:#000;padding:8px 16px;border-radius:20px;font-weight:bold;font-size:13px;margin:5px}
-.wrap{max-width:600px;margin:0 auto;padding:15px}
-.glasses{position:relative;display:flex;gap:8px;background:#111;border:4px solid #333;border-radius:50px 50px 40px 40px;padding:14px 14px 22px;margin:10px 0}
-.lens{flex:1;background:#0b2e1e;border:3px solid #000;border-radius:35px 35px 30px 30px;padding:14px;text-align:left;min-height:130px}
+body{background:#000;color:#fff;font-family:Arial;text-align:center;margin:0;padding:0}
+.top{background:#ff6b00;padding:20px 10px 10px}
+.top h1{font-size:44px;margin:5px}.top h1 span{color:#ffcc00}
+.pill{background:#fff;color:#000;display:inline-block;padding:8px 16px;border-radius:20px;font-weight:bold;font-size:13px}
+.glasses{background:#111;border:4px solid #ffcc00;border-radius:40px;padding:12px;display:flex;gap:8px;margin:12px}
+.lens{flex:1;background:#0b2e1e;border-radius:30px;padding:12px;text-align:left;font-size:13px;line-height:1.6;min-height:110px}
 .lens b{color:#00ff9d}
-.bridge{position:absolute;left:50%;top:8px;transform:translateX(-50%);background:#111;width:40px;height:18px;border-radius:0 0 15px 15px}
-.btns button{padding:13px 22px;border:0;border-radius:25px;font-weight:bold;font-size:16px;margin:6px;cursor:pointer}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;text-align:left;margin-top:10px}
-.card{background:#1c1c1c;padding:14px;border-radius:14px}
-.card h3{color:#ffcc00;font-size:15px}.card p{font-size:12px;opacity:.85;line-height:1.5;margin-top:5px}
-.footer{opacity:.6;font-size:12px;padding:20px}
+button{padding:14px 24px;border:0;border-radius:25px;font-weight:bold;font-size:16px;margin:6px}
+.card{background:#1c1c1c;padding:12px;border-radius:12px;text-align:left;margin:8px}
 </style>
 </head>
 <body>
-<div class="hero">
+<div class="top">
 <div class="pill">DORAHACKS • SMART GLASSES</div>
 <h1>ROAST <span>MAP</span></h1>
-<p>Roasters wear these glasses.<br>Temperature & roast curve appear on the lens, hands stay free.</p>
-<div class="pill">👓 WORN WHILE ROASTING</div>
+<p>Roasters wear these glasses. Temp & curve appear on lens.</p>
+<div class="pill">WORN WHILE ROASTING</div>
+
+<div class="glasses">
+<div class="lens">TEMP: <b id="temp">209°C</b><br>GAS: <b id="gas">50%</b><br>LIGHT ROAST<br>ROAST MAP • Live</div>
+<div class="lens">ROAST MAP - LIVE<br><svg viewBox="0 0 200 70" style="width:100%;height:65px;background:#000;border-radius:8px"><polyline id="curve" points="0,60 20,55 40,50 60,45 80,40 100,35 120,30 140,25 160,20 180,15 200,10" fill="none" stroke="#00ff9d" stroke-width="3"/></svg></div>
 </div>
-<div class="wrap">
-<div class="glasses
+
+<p>LIVE DEMO - TRY IT</p>
+<button onclick="gasUp()" style="background:#ffcc00">GAS +</button>
+<button onclick="gasDown()" style="background:#fff">GAS -</button>
+<p id="msg" style="color:#ffcc00;font-size:13px">Press GAS + to see temp go up!</p>
+
+<div class="card"><b style="color:#ffcc00">Temp on Lens</b><br>No need to look away. Temp shows in front of your eyes.</div>
+<div class="card"><b style="color:#ffcc00">Live Curve</b><br>Roast Map runs on the right lens.</div>
+<div class="card"><b style="color:#ffcc00">Hands-Free</b><br>Hands free to control the drum.</div>
+<div class="card"><b style="color:#ffcc00">DoraHacks</b><br>Original work by Cengkudu 800 MDPL.</div>
+<p style="opacity:.6;font-size:12px;padding:15px">ROAST MAP © 2026 • Cengkudu 800 MDPL • DoraHacks</p>
+</div>
+<script>
+let temp=209,gas=50,pts=[60,55,50,45,40,35,30,25,20,15,10];
+function render(){document.getElementById('temp').innerText=Math.round(temp)+'°C';document.getElementById('gas').innerText=gas+'%';document.getElementById('curve').setAttribute('points',pts.map((p,i)=>i*20+','+p).join(' '))}
+function gasUp(){gas=Math.min(100,gas+5);temp+=3;pts.push(Math.max(5,pts[pts.length-1]-4));if(pts.length>11)pts.shift();document.getElementById('msg').innerText='GAS UP! Temp '+Math.round(temp)+'°C';render()}
+function gasDown(){gas=Math.max(0,gas-5);temp-=3;pts.push(Math.min(65,pts[pts.length-1]+4));if(pts.length>11)pts.shift();document.getElementById('msg').innerText='GAS DOWN! Temp '+Math.round(temp)+'°C';render()}
+render();
+</script>
+</body>
+</html>
