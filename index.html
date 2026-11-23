@@ -1,68 +1,48 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ROAST MAP - Muse Smart Glasses</title>
+<title>ROAST MAP - Smart Glasses for Coffee Roasters | DoraHacks</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
-body{background:#0f0f0f;color:#fff;text-align:center}
-.hero{padding:30px 15px;background:linear-gradient(180deg,#ff6b00,#0f0f0f)}
-.hero h1{font-size:44px}.hero h1 span{color:#ffcc00}
-.hero p{margin:10px 0;opacity:.9}
-.pill{display:inline-block;background:#fff;color:#000;padding:8px 16px;border-radius:20px;font-weight:bold;font-size:13px;margin:4px}
-/* KACAMATA BENERAN */
-.frame{max-width:560px;margin:25px auto;padding:10px}
-.glasses{position:relative;display:flex;gap:0;justify-content:center}
-.lens{width:48%;height:200px;background:linear-gradient(135deg,#0a2a1a,#051510);border:10px solid #000;border-radius:35px;position:relative;overflow:hidden;box-shadow:0 0 0 3px #333}
-.lens:first-child{border-top-right-radius:10px;border-bottom-right-radius:10px}
-.lens:last-child{border-top-left-radius:10px;border-bottom-left-radius:10px}
-.bridge{width:45px;height:28px;background:#000;margin-top:35px;z-index:2;border-radius:0 0 15px 15px}
-.temple{position:absolute;top:20px;width:28px;height:10px;background:#000}
-.temple.l{left:-8px}.temple.r{right:-8px}
-.hud{position:absolute;inset:0;padding:12px;text-align:left;font-size:13px;line-height:1.7;background:radial-gradient(circle at 50% 50%,rgba(0,255,150,.15),transparent)}
-.hud b{color:#00ff9d}
-canvas{width:100%;height:65px;background:rgba(0,0,0,.7);border-radius:8px}
-.btns{margin:15px 0}
-.btns button{padding:12px 20px;border:0;border-radius:25px;font-weight:bold;font-size:15px;margin:4px}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:15px;max-width:600px;margin:auto;text-align:left}
+body{background:#0a0a0a;color:#fff;text-align:center}
+.hero{padding:28px 15px;background:linear-gradient(180deg,#ff6b00,#0a0a0a)}
+.hero h1{font-size:46px}.hero h1 span{color:#ffcc00}
+.pill{display:inline-block;background:#fff;color:#000;padding:8px 16px;border-radius:20px;font-weight:bold;font-size:13px;margin:5px}
+.wrap{max-width:600px;margin:0 auto;padding:15px}
+svg{width:100%;height:auto;filter:drop-shadow(0 10px 20px rgba(0,0,0,.8))}
+.btns button{padding:13px 22px;border:0;border-radius:25px;font-weight:bold;font-size:16px;margin:6px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;text-align:left;margin-top:10px}
 .card{background:#1c1c1c;padding:14px;border-radius:14px}
-.card h3{color:#ffcc00;font-size:15px;margin-bottom:5px}.card p{font-size:12px;opacity:.85;line-height:1.5}
+.card h3{color:#ffcc00;font-size:15px}.card p{font-size:12px;opacity:.85;line-height:1.5;margin-top:5px}
 .footer{opacity:.6;font-size:12px;padding:20px}
 </style>
 </head>
 <body>
 <div class="hero">
-<div class="pill">HACKATHON • MUSE SMART GLASSES</div>
+<div class="pill">DORAHACKS • SMART GLASSES</div>
 <h1>ROAST <span>MAP</span></h1>
-<p>Roaster pake kacamata kayak gini, Jendral.<br>Suhu & kurva muncul di lensa, tangan bebas.</p>
-<div class="pill">👓 DIPAKE PAS ROASTING</div>
+<p>Roasters wear these glasses.<br>Temperature & roast curve appear on the lens, hands stay free.</p>
+<div class="pill">👓 WORN WHILE ROASTING</div>
 </div>
 
-<div class="frame">
-<div class="glasses">
-<div class="temple l"></div>
-<div class="lens"><div class="hud">📍 TEMP: <b id="temp">215°C</b><br>🔥 GAS: <b id="gas">50%</b><br>☕ PROFILE: <b>LIGHT ROAST</b><br><small style="opacity:.7">Muse • Roast Map Live</small></div></div>
-<div class="bridge"></div>
-<div class="lens"><div class="hud">ROAST MAP - LIVE<br><canvas id="chart"></canvas><br><small>◄ Lensa Kanan: Kurva Roasting</small></div></div>
-<div class="temple r"></div>
-</div>
-<p style="margin-top:10px">🔴 LIVE DEMO</p>
+<div class="wrap">
+<svg viewBox="0 0 600 240" xmlns="http://www.w3.org/2000/svg">
+<rect x="0" y="60" width="60" height="14" rx="7" fill="#000"/>
+<rect x="540" y="60" width="60" height="14" rx="7" fill="#000"/>
+<path d="M40 40 Q150 20 270 45 Q290 50 300 70 Q310 50 330 45 Q450 20 560 40 L560 190 Q450 220 330 190 Q310 185 300 165 Q290 185 270 190 Q150 220 40 190 Z" fill="#111" stroke="#333" stroke-width="3"/>
+<path d="M55 55 Q150 38 260 58 Q275 62 282 78 L282 175 Q170 200 60 175 Z" fill="#0b2e1e"/>
+<path d="M318 78 Q325 62 340 58 Q450 38 545 55 L540 175 Q430 200 318 175 Z" fill="#0b2e1e"/>
+<path d="M282 78 Q300 95 318 78 L318 95 Q300 110 282 95 Z" fill="#000"/>
+<foreignObject x="65" y="70" width="200" height="110"><div xmlns="http://www.w3.org/1999/xhtml" style="color:#fff;font-size:14px;line-height:1.6;font-family:Arial">📍 TEMP: <b id="temp" style="color:#00ff9d">209°C</b><br/>🔥 GAS: <b id="gas" style="color:#00ff9d">50%</b><br/>☕ LIGHT ROAST<br/><span style="font-size:11px;opacity:.7">ROAST MAP • Live</span></div></foreignObject>
+<foreignObject x="330" y="70" width="200" height="110"><div xmlns="http://www.w3.org/1999/xhtml" style="color:#fff;font-size:13px;font-family:Arial">ROAST MAP - LIVE<br/><canvas id="chart" width="190" height="60" style="background:rgba(0,0,0,.7);border-radius:8px;margin-top:6px"></canvas></div></foreignObject>
+</svg>
+
+<p>🔴 LIVE DEMO</p>
 <div class="btns"><button onclick="gasUp()" style="background:#ffcc00">GAS +</button><button onclick="gasDown()" style="background:#fff">GAS -</button></div>
-</div>
 
 <div class="grid">
-<div class="card"><h3>🌡️ Suhu di Lensa</h3><p>Gak perlu noleh. Suhu 215°C langsung di depan mata.</p></div>
-<div class="card"><h3>📈 Kurva Live</h3><p>Roast Map jalan di lensa kanan. Tau kapan gas naik/turun.</p></div>
-<div class="card"><h3>🙌 Hands-Free</h3><p>Kayak foto lu, Jendral. Pake kacamata, tangan bebas megang drum.</p></div>
-<div class="card"><h3>🔥 Buat Hackathon</h3><p>Konsep Muse Glasses untuk roaster Indonesia.</p></div>
-</div>
-<div class="footer">ROAST MAP © 2026 • Cengkudu 800 MDPL • Muse Smart Glasses</div>
-<script>
-let temp=195,gas=50,pts=[195];let c=document.getElementById('chart'),x=c.getContext('2d');
-function draw(){c.width=c.clientWidth;c.height=65;x.clearRect(0,0,c.width,c.height);x.strokeStyle='#00ff9d';x.lineWidth=2;x.beginPath();pts.forEach((p,i)=>{let px=i/(pts.length-1||1)*c.width;let py=c.height-(p-150)/100*c.height;i?x.lineTo(px,py):x.moveTo(px,py)});x.stroke()}
-function up(){document.getElementById('temp').innerText=Math.round(temp)+'°C';document.getElementById('gas').innerText=gas+'%';draw()}
-function gasUp(){gas=Math.min(100,gas+5)}function gasDown(){gas=Math.max(0,gas-5)}
-setInterval(()=>{temp+=(gas/100*2-0.6)+(Math.random()-.5);pts.push(temp);if(pts.length>30)pts.shift();up()},1000);up();
-</script>
-</body>
-</html>
+<div class="card"><h3>🌡️ Temp on Lens</h3><p>No need to look away. Temperature shows right in front of your eyes.</p></div>
+<div class="card"><h3>📈 Live Curve</h3><p>Roast Map runs on the right lens. Know when to adjust gas.</p></div>
+<div class="card"><h3>🙌 Hands-Free</h3><p>Wear glasses, hands free to control the drum.</p></div>
+<div class="card"><h3>🏆 DoraHacks</h3
