@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ROAST MAP - Panel Mesin di Kacamata</title>
+<style>
+body{background:#111;color:#fff;font-family:sans-serif;text-align:center;margin:0;padding:12px}
+h1{font-size:20px;margin:6px} .box{background:#222;border-radius:14px;padding:12px;margin:8px 0}
+.big{font-size:48px;font-weight:bold} .mid{font-size:22px}
+button{font-size:20px;padding:14px 18px;border-radius:12px;border:0;margin:4px;background:#f5c518;color:#000;font-weight:bold}
+button.green{background:#22c55e;color:#fff} button.red{background:#ef4444;color:#fff}
+input{font-size:26px;width:110px;text-align:center;padding:8px;border-radius:10px}
+canvas{width:100%;background:#fff;border-radius:10px}
+#cmd{background:#fef08a;color:#111;font-size:22px;font-weight:bold;padding:12px;border-radius:12px}
+</style></head><body>
+<h1>ROAST MAP</h1><div>Panel Mesin Roasting - Buat Drum Manual</div>
+<div class="box"><div>SUHU BIJI</div><div class="big"><span id="temp">25</span>°C</div>
+<button onclick="chg(-5)">-5</button><button onclick="chg(-1)">-1</button>
+<input id="inTemp" type="number" value="25"><button onclick="setTemp()">SET</button>
+<button onclick="chg(1)">+1</button><button onclick="chg(5)">+5</button></div>
+<div class="box"><div>TIMER | RoR | FASE</div>
+<div class="mid"><span id="timer">00:00</span> | <span id="ror">0</span>°C/mnt | <span id="fase">SIAP</span></div>
+<div id="cmd">Pencet MULAI, masukin biji, catat suhu tiap 30 detik</div></div>
+<div class="box"><button class="green" onclick="start()">▶ MULAI ROASTING</button>
+<button onclick="mark('DRYING')">DRYING</button><button onclick="mark('MAILARD')">MAILLARD</button>
+<button onclick="mark('KARAMELISASI')">KARAMELISASI</button><button onclick="mark('FIRST CRACK')">FIRST CRACK</button>
+<button class="red" onclick="drop()">⏹ DROP BEAN</button></div>
+<div class="box"><canvas id="cv" width="320" height="180"></canvas>
+<div id="log" style="text-align:left;font-size:14px"></div></div>
+<div class="box"><button onclick="exportWA()">EXPORT WA</button></div>
+<script>
+let t=25,sec=0,run=false,pts=[],startT=0,fcTime=null,logs=[];
+function fmt(s){return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')}
+function draw(){let c=document.getElementById('cv'),x=c.getContext('2d');x.clearRect(0,0,320,180);x.strokeStyle='#ddd';x.beginPath();x.moveTo(0,170);x.lineTo(0,10);x.moveTo(0,170);x.lineTo(320,170);x.stroke();x.strokeStyle='#f59e0b';x.beginPath();x.moveTo(0,160);x.lineTo(320,20);x.setLineDash([4,4]);x.stroke();x.setLineDash([]);x.strokeStyle='#000';x.lineWidth=3;x.beginPath();pts.forEach((p,i)=>{let px=p[0]/600*320,py=170-(p[1]-25)/220*160;if(i==0)x.moveTo(px,py);else x.lineTo(px,py)});x.stroke();}
+function update(){document.getElementById('temp').innerText=t;document.getElementById('timer').innerText=fmt(sec);let ror=pts.length>1?((pts[pts.length-1][1]-pts[pts.length-2][1])/((pts[pts.length-1][0]-pts[pts.length-2][0])/60)):0;document.getElementById('ror').innerText=ror.toFixed(1);let f=document.getElementById('fase').innerText;let cmd=document.getElementById('cmd');if(!run){cmd.innerText='Pencet MULAI'}else if(t>=205){cmd.innerText='DROP SEKARANG! SUDAH 205°C - JANGAN LONG TRIP'}else if(f=='FIRST CRACK'){cmd.innerText='DEVELOPMENT - Sisa '+(90-(sec-fcTime))+' detik ke DROP. TAHAN API.'}else if(ror>12){cmd.innerText='FAST TRIP! KECILKAN API DIKIT - Naiknya kecepetan'}else if(ror<4&&sec>60){cmd.innerText='LONG TRIP! GEDEIN API DIKIT - Naiknya kelamaan, bisa AOR'}else{cmd.innerText='JALUR BAGUS - Lanjut, putar drum stabil'}draw();}
+function chg(d){t+=d;if(run)pts.push([sec,t]);update();}
+function setTemp(){t=parseInt(document.getElementById('inTemp').value)||t;if(run)pts.push([sec,t]);update();}
+function start(){if(run)return;run=true;startT=Date.now();setInterval(()=>{if(!run)return;sec++;if(sec%30==0){pts.push([sec,t]);logs.push(fmt(sec)+' - '+t+'°C');document.getElementById('log').innerHTML=logs.join('<br>')}update()},1000);document.getElementById('fase').innerText='DRYING';update();}
+function mark(p){document.getElementById('fase').innerText=p;if(p=='FIRST CRACK')fcTime=sec;logs.push(fmt(sec)+' - '+p+' - '+t+'°C');document.getElementById('log').innerHTML=logs.join('<br>');update();}
+function drop(){run=false;document.getElementById('fase').innerText='DROP';logs.push(fmt(sec)+' - DROP - '+t+'°C');document.getElementById('log').innerHTML=logs.join('<br>');update();alert('DROP di '+t+'°C, waktu '+fmt(sec));}
+function exportWA(){let txt='ROAST MAP%0A'+logs.join('%0A');window.open('https://wa.me/?text='+txt)}
+update();
+</script></body></html>
