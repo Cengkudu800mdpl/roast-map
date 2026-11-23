@@ -10,8 +10,11 @@ body{background:#0a0a0a;color:#fff;text-align:center}
 .hero h1{font-size:46px}.hero h1 span{color:#ffcc00}
 .pill{display:inline-block;background:#fff;color:#000;padding:8px 16px;border-radius:20px;font-weight:bold;font-size:13px;margin:5px}
 .wrap{max-width:600px;margin:0 auto;padding:15px}
-svg{width:100%;height:auto;filter:drop-shadow(0 10px 20px rgba(0,0,0,.8))}
-.btns button{padding:13px 22px;border:0;border-radius:25px;font-weight:bold;font-size:16px;margin:6px}
+.glasses{position:relative;display:flex;gap:8px;background:#111;border:4px solid #333;border-radius:50px 50px 40px 40px;padding:14px 14px 22px;margin:10px 0}
+.lens{flex:1;background:#0b2e1e;border:3px solid #000;border-radius:35px 35px 30px 30px;padding:14px;text-align:left;min-height:130px}
+.lens b{color:#00ff9d}
+.bridge{position:absolute;left:50%;top:8px;transform:translateX(-50%);background:#111;width:40px;height:18px;border-radius:0 0 15px 15px}
+.btns button{padding:13px 22px;border:0;border-radius:25px;font-weight:bold;font-size:16px;margin:6px;cursor:pointer}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;text-align:left;margin-top:10px}
 .card{background:#1c1c1c;padding:14px;border-radius:14px}
 .card h3{color:#ffcc00;font-size:15px}.card p{font-size:12px;opacity:.85;line-height:1.5;margin-top:5px}
@@ -25,24 +28,5 @@ svg{width:100%;height:auto;filter:drop-shadow(0 10px 20px rgba(0,0,0,.8))}
 <p>Roasters wear these glasses.<br>Temperature & roast curve appear on the lens, hands stay free.</p>
 <div class="pill">👓 WORN WHILE ROASTING</div>
 </div>
-
 <div class="wrap">
-<svg viewBox="0 0 600 240" xmlns="http://www.w3.org/2000/svg">
-<rect x="0" y="60" width="60" height="14" rx="7" fill="#000"/>
-<rect x="540" y="60" width="60" height="14" rx="7" fill="#000"/>
-<path d="M40 40 Q150 20 270 45 Q290 50 300 70 Q310 50 330 45 Q450 20 560 40 L560 190 Q450 220 330 190 Q310 185 300 165 Q290 185 270 190 Q150 220 40 190 Z" fill="#111" stroke="#333" stroke-width="3"/>
-<path d="M55 55 Q150 38 260 58 Q275 62 282 78 L282 175 Q170 200 60 175 Z" fill="#0b2e1e"/>
-<path d="M318 78 Q325 62 340 58 Q450 38 545 55 L540 175 Q430 200 318 175 Z" fill="#0b2e1e"/>
-<path d="M282 78 Q300 95 318 78 L318 95 Q300 110 282 95 Z" fill="#000"/>
-<foreignObject x="65" y="70" width="200" height="110"><div xmlns="http://www.w3.org/1999/xhtml" style="color:#fff;font-size:14px;line-height:1.6;font-family:Arial">📍 TEMP: <b id="temp" style="color:#00ff9d">209°C</b><br/>🔥 GAS: <b id="gas" style="color:#00ff9d">50%</b><br/>☕ LIGHT ROAST<br/><span style="font-size:11px;opacity:.7">ROAST MAP • Live</span></div></foreignObject>
-<foreignObject x="330" y="70" width="200" height="110"><div xmlns="http://www.w3.org/1999/xhtml" style="color:#fff;font-size:13px;font-family:Arial">ROAST MAP - LIVE<br/><canvas id="chart" width="190" height="60" style="background:rgba(0,0,0,.7);border-radius:8px;margin-top:6px"></canvas></div></foreignObject>
-</svg>
-
-<p>🔴 LIVE DEMO</p>
-<div class="btns"><button onclick="gasUp()" style="background:#ffcc00">GAS +</button><button onclick="gasDown()" style="background:#fff">GAS -</button></div>
-
-<div class="grid">
-<div class="card"><h3>🌡️ Temp on Lens</h3><p>No need to look away. Temperature shows right in front of your eyes.</p></div>
-<div class="card"><h3>📈 Live Curve</h3><p>Roast Map runs on the right lens. Know when to adjust gas.</p></div>
-<div class="card"><h3>🙌 Hands-Free</h3><p>Wear glasses, hands free to control the drum.</p></div>
-<div class="card"><h3>🏆 DoraHacks</h3
+<div class="glasses
