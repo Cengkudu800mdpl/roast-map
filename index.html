@@ -6,87 +6,81 @@
 <title>ROAST MAP - AI ROAST COACH</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif}
-body{background:#f2f2f2;padding:12px}
-.card{background:#fff;border-radius:16px;padding:16px;max-width:480px;margin:0 auto;box-shadow:0 4px 20px rgba(0,0,0,.1)}
-.top{display:flex;justify-content:space-between;align-items:center}
-.top b{font-size:15px;letter-spacing:.5px}
-.top span{background:#ff6b00;color:#fff;font-size:11px;padding:4px 8px;border-radius:20px}
-.temp{text-align:center;margin:14px 0 4px}
-.temp h1{font-size:52px}
-.temp h1 small{font-size:18px}
-.phase{text-align:center;font-weight:bold;font-size:18px;margin:4px 0}
-.dot{width:14px;height:14px;border-radius:50%;display:inline-block;margin-right:6px;vertical-align:middle}
-.bean{text-align:center;margin:8px 0}
-.beanbox{width:110px;height:70px;border-radius:50%;margin:8px auto;display:flex;align-items:center;justify-content:center;font-weight:bold;color:#fff;font-size:12px}
-.score{text-align:center;background:#e8f5e9;border-radius:12px;padding:10px;margin:10px 0}
-.score b{font-size:22px}
-.coach{background:#fff3e0;border-radius:12px;padding:12px;text-align:center;font-weight:bold;margin:10px 0}
-.btnrow{display:flex;gap:8px;margin:8px 0}
-button{flex:1;padding:12px;border:0;border-radius:12px;font-weight:bold;font-size:15px;cursor:pointer}
-.gas{background:#ff9800;color:#fff}
-.speak{background:#222;color:#fff}
-.air{background:#e3f2fd}
-.cool{background:#e8f5e9}
-canvas{width:100%;height:90px;background:#fafafa;border-radius:10px;margin-top:8px}
-.small{text-align:center;font-size:11px;color:#888;margin-top:8px}
+body{background:#f2f2f2;padding:10px}
+.topbar{display:flex;justify-content:space-between;max-width:480px;margin:0 auto 8px;font-weight:900;font-size:18px}
+.topbar span{color:#ff6b00}
+.card{background:#111;border:6px solid #ff6b00;border-radius:28px;padding:16px;max-width:480px;margin:0 auto;color:#fff}
+.head{font-size:12px;letter-spacing:1px;color:#ccc}
+.big{display:flex;justify-content:space-between;align-items:center;margin:8px 0}
+.big h1{font-size:64px;line-height:1}
+.big h1 small{font-size:22px}
+.badge{background:#ff6b00;padding:8px 12px;border-radius:20px;font-weight:900;font-size:13px}
+.sub{font-size:12px;color:#ccc;margin-top:2px}
+.score{display:flex;justify-content:space-between;background:#000;border-radius:12px;padding:12px;margin:12px 0;font-weight:900}
+.score b{color:#ff6b00}
+.graph{background:#000;border-radius:12px;padding:10px;margin:10px 0}
+.graph .ghead{display:flex;justify-content:space-between;font-size:11px;font-weight:bold}
+canvas{width:100%;height:80px}
+.beanrow{display:flex;gap:10px;background:#000;border-radius:12px;padding:12px;align-items:center;margin:10px 0}
+.circle{width:52px;height:52px;border-radius:50%;background:#2e7d32;border:3px solid #fff;flex-shrink:0}
+.beanrow small{color:#aaa}
+.coach{background:#fff;color:#111;border-radius:12px;padding:14px;font-size:16px;margin:10px 0}
+.coach b{color:#c65a00}
+.btnrow{display:flex;gap:10px;margin:10px 0}
+button{flex:1;padding:16px 6px;border:0;border-radius:12px;font-weight:900;font-size:15px;cursor:pointer;background:#fff}
+button.orange{background:#ff6b00;color:#fff}
+button.blue{background:#29b6f6;color:#fff}
+.mini{display:flex;justify-content:space-between;background:#000;border-radius:12px;padding:12px;font-weight:900;font-size:14px;margin:10px 0}
+.mini b{color:#ff6b00}
 </style>
 </head>
 <body>
+<div class="topbar"><div>Sweet <span>FLAVOR</span></div><div>Clean <span>BODY</span></div></div>
 <div class="card">
-<div class="top"><b>ROAST MAP - AI ROAST COACH</b><span>CENGKUDU</span></div>
-<div class="temp"><h1><span id="temp">205</span><small>°C</small></h1></div>
-<div class="phase"><span id="dot" class="dot" style="background:#c68a3d"></span><span id="phase">FIRST CRACK</span></div>
-<div class="bean"><div id="beanbox" class="beanbox" style="background:#a67c4a">BEAN</div><div id="beanlabel"><b>Bean: Light Brown - First Crack</b></div></div>
-<div class="score">CURRENT SCORE: <b id="score">78</b> &nbsp; TARGET 80+<br><span id="scorelabel" style="font-size:12px;color:#666">Good! Keep stable.</span></div>
-<div class="coach" id="coach">Perfect! Hold this temp.</div>
+<div class="head">ROAST MAP - AI ROAST COACH</div>
+<div class="big"><div><h1><span id="temp">165</span><small>°C</small></h1><div class="sub">BEAN TEMP - 11:52</div></div><div class="badge" id="phase">DRYING</div></div>
+<div class="score"><div>CURRENT SCORE: <span id="score">70</span></div><div>TARGET <b>80+</b></div></div>
+<div class="graph"><div class="ghead"><span>GRAFIK SUHU - ROAST CURVE</span><span style="color:#ff6b00" id="gtemp">165°C</span></div><canvas id="chart" width="440" height="80"></canvas></div>
+<div class="beanrow"><div class="circle" id="circle"></div><div><b id="beanlabel">Bean: Hijau - Drying</b><br><small id="beandesc">Bean masih hijau, masih proses pengeringan.</small></div></div>
+<div class="coach" id="coach"><b>Way too cold.</b> Tap GAS + to heat up.</div>
 <div class="btnrow">
-<button class="gas" onclick="changeTemp(-1)">GAS -</button>
-<button class="gas" onclick="changeTemp(1)">GAS +</button>
-<button class="speak" onclick="speak()">SPEAK 🔊</button>
+<button onclick="changeTemp(1)">GAS +</button>
+<button onclick="changeTemp(-1)">GAS -</button>
+<button class="orange" onclick="speak()">SPEAK:<br>LOWER GAS</button>
 </div>
+<div class="mini"><div>AIRFLOW: <b id="airlabel">50%</b></div><div>COOLING: <span id="coollabel">OFF</span></div></div>
 <div class="btnrow">
-<button class="air" onclick="changeAir(-1)">AIRFLOW -</button>
-<button class="air" id="airlabel">AIRFLOW: 1</button>
-<button class="air" onclick="changeAir(1)">AIRFLOW +</button>
+<button onclick="changeAir(-1)">AIRFLOW -</button>
+<button onclick="changeAir(1)">AIRFLOW +</button>
+<button class="blue" id="coolbtn" onclick="toggleCool()">COOLING:<br>OFF</button>
 </div>
-<div class="btnrow">
-<button class="cool" id="coolbtn" onclick="toggleCool()">COOLING: ON</button>
-</div>
-<div style="text-align:center;font-weight:bold;margin-top:10px">TEMPERATURE GRAPH</div>
-<canvas id="chart" width="440" height="90"></canvas>
-<div class="small">ROAST MAP • Cengkudu 800 MDPL • Banyumas</div>
 </div>
 <script>
-let temp=205, air=1, cooling=true, history=[205,204,205,206,205,205,204];
+let temp=165, air=50, cooling=false, history=[165,164,165,166,165,165,164];
 function update(){
 document.getElementById('temp').innerText=temp;
-document.getElementById('airlabel').innerText='AIRFLOW: '+air;
-document.getElementById('coolbtn').innerText=cooling?'COOLING: ON':'COOLING: OFF';
-let phase, color, bean, beanColor, coach, score;
-if(temp<180){phase='DRYING';color='#4caf50';bean='Bean: Green - Drying';beanColor='#6aa84f';coach='Way too cold. Tap GAS + to heat up.';score=70;}
-else if(temp<200){phase='YELLOWING';color='#ffca28';bean='Bean: Yellow - Yellowing';beanColor='#d4a017';coach='Warming up. Keep GAS stable.';score=74;}
-else if(temp<=210){phase='FIRST CRACK';color='#c68a3d';bean='Bean: Light Brown - First Crack';beanColor='#a67c4a';coach='Perfect! Hold this temp.';score=cooling?82:78;}
-else{phase='SECOND CRACK - TOO HOT';color='#d32f2f';bean='Bean: Dark - Burnt Risk';beanColor='#3e2723';coach='Too hot! Tap GAS - and turn COOLING ON.';score=55;}
+document.getElementById('gtemp').innerText=temp+'°C';
+document.getElementById('airlabel').innerText=air+'%';
+document.getElementById('coollabel').innerText=cooling?'ON':'OFF';
+document.getElementById('coolbtn').innerHTML=cooling?'COOLING:<br>ON':'COOLING:<br>OFF';
+let phase, bean, desc, coach, score, col;
+if(temp<180){phase='DRYING';bean='Bean: Hijau - Drying';desc='Bean masih hijau, masih proses pengeringan.';coach='<b>Way too cold.</b> Tap GAS + to heat up.';score=70;col='#2e7d32';}
+else if(temp<200){phase='YELLOWING';bean='Bean: Yellow - Yellowing';desc='Bean mulai menguning.';coach='<b>Warming up.</b> Keep GAS stable.';score=74;col='#d4a017';}
+else if(temp<=210){phase='FIRST CRACK';bean='Bean: Light Brown - First Crack';desc='First crack! Aroma mulai keluar.';coach='<b>Perfect!</b> Hold this temp.';score=cooling?82:78;col='#a67c4a';}
+else{phase='TOO HOT';bean='Bean: Dark - Burnt Risk';desc='Terlalu panas, risiko gosong.';coach='<b>Too hot!</b> Tap GAS - and turn COOLING ON.';score=55;col='#3e2723';}
 document.getElementById('phase').innerText=phase;
-document.getElementById('dot').style.background=color;
-document.getElementById('beanlabel').innerHTML='<b>'+bean+'</b>';
-document.getElementById('beanbox').style.background=beanColor;
-document.getElementById('coach').innerText=coach;
+document.getElementById('beanlabel').innerText=bean;
+document.getElementById('beandesc').innerText=desc;
+document.getElementById('coach').innerHTML=coach;
 document.getElementById('score').innerText=score;
-document.getElementById('scorelabel').innerText=score>=80?'Excellent! You are on target.':'Good! Keep stable.';
+document.getElementById('circle').style.background=col;
 draw();
 }
 function changeTemp(d){temp=Math.max(120,Math.min(240,temp+d));history.push(temp);if(history.length>20)history.shift();update();}
-function changeAir(d){air=Math.max(0,Math.min(5,air+d));update();}
+function changeAir(d){air=Math.max(0,Math.min(100,air+d*10));update();}
 function toggleCool(){cooling=!cooling;update();}
-function speak(){let t=new SpeechSynthesisUtterance(document.getElementById('coach').innerText+' Temperature '+temp+' degrees. Score '+document.getElementById('score').innerText);t.lang='en-US';speechSynthesis.speak(t);}
-function draw(){
-let c=document.getElementById('chart'),ctx=c.getContext('2d');ctx.clearRect(0,0,c.width,c.height);
-ctx.beginPath();ctx.strokeStyle='#ff6b00';ctx.lineWidth=3;
-history.forEach((v,i)=>{let x=i/(19)*c.width;let y=c.height-((v-120)/120)*c.height;if(i==0)ctx.moveTo(x,y);else ctx.lineTo(x,y);});
-ctx.stroke();
-ctx.fillStyle='#888';ctx.font='11px Arial';ctx.fillText('120°C',4,c.height-4);ctx.fillText('240°C',4,12);
-}
+function speak(){let t=new SpeechSynthesisUtterance(document.getElementById('coach').innerText+' Temperature '+temp+' degrees.');t.lang='en-US';speechSynthesis.speak(t);}
+function draw(){let c=document.getElementById('chart'),ctx=c.getContext('2d');ctx.clearRect(0,0,c.width,c.height);ctx.beginPath();ctx.strokeStyle='#ff6b00';ctx.lineWidth=3;history.forEach((v,i)=>{let x=i/19*c.width;let y=c.height-((v-120)/120)*c.height;if(i==0)ctx.moveTo(x,y);else ctx.lineTo(x,y);});ctx.stroke();}
 update();
 </script>
 </body>
