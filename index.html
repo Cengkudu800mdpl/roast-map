@@ -28,7 +28,10 @@ canvas{width:100%;height:110px;background:#000;border-radius:12px;margin-top:12p
 .btn{flex:1;background:#fff;color:#000;border:none;padding:12px;border-radius:12px;font-weight:900;cursor:pointer}
 .btn:active{transform:scale(.96)}
 .btn.orange{background:#ff7a00;color:#fff}
+.btn.blue{background:#00a8ff;color:#fff}
 .footer{max-width:480px;text-align:center;font-size:12px;color:#aaa;line-height:1.6;margin-top:10px}
+.status{margin-top:12px;background:#000;border-radius:14px;padding:10px;display:flex;justify-content:space-between;font-weight:900;font-size:13px}
+.status b{color:#ff7a00}
 </style>
 </head>
 <body>
@@ -40,17 +43,20 @@ canvas{width:100%;height:110px;background:#000;border-radius:12px;margin-top:12p
 <div class="bean"><div class="dot" id="dot"></div><div><b id="beanTitle">Bean: Coklat Terang - First Crack</b><br><small id="beanDesc">Bunyi krek...krek... Aroma manis keluar. Tahan suhu.</small></div></div>
 <div class="coach" id="coach"><b>Hold temp at 205°C for 1 minute.</b> Do not increase gas. You are close to Specialty, Chief.</div>
 <div class="btns"><button class="btn" onclick="gas(1)">GAS +</button><button class="btn" onclick="gas(-1)">GAS -</button><button class="btn orange" onclick="speak()">SPEAK: LOWER GAS</button></div>
+<div class="status"><span>AIRFLOW: <b id="airVal">50%</b></span><span id="coolVal">COOLING: OFF</span></div>
+<div class="btns"><button class="btn" onclick="air(-10)">AIRFLOW -</button><button class="btn" onclick="air(10)">AIRFLOW +</button><button class="btn blue" id="coolBtn" onclick="cooling()">COOLING: OFF</button></div>
 </div></div>
 <div class="footer"><b style="color:#fff">DEMO - Smart Roast Glass for Manual Roaster Cengkudu</b><br>Tap GAS + / GAS - to change temp. Try it for DoraHacks demo.<br>Hands-free, eyes on coffee, info on lens.</div>
 <script>
-let t=205, sec=462, hist=[180,190,198,202,205];
+let t=205, sec=462, hist=[180,190,198,202,205], airflow=50, coolOn=false;
 function update(){
 document.getElementById('temp').textContent=t;
 let m=String(Math.floor(sec/60)).padStart(2,'0');
 let s=String(sec%60).padStart(2,'0');
 document.getElementById('time').textContent=m+':'+s;
 let score, msg, phase, beanT, beanD, color;
-if(t>=215){score=74;phase='TOO HOT';msg='<b>TOO HOT! 215°C!</b> Score drops to 74 and turns bitter. Tap GAS - now, Chief!';beanT='Bean: Hitam - Gosong';beanD='Terlalu panas, bean gosong, rasa pahit.';color='#111';}
+if(coolOn){score=82;phase='COOLING';msg='<b>COOLING ON - Kipas nyala!</b> Suhu turun cepet. Bean berhenti mateng. Good job, Chief! Score aman.';beanT='Bean: Coklat Terang - Cooling';beanD='Dikipas, suhu turun, roasting berhenti. Gak gosong.';color='#8b4513';}
+else if(t>=215){score=74;phase='TOO HOT';msg='<b>TOO HOT! 215°C!</b> Score drops to 74 and turns bitter. Tap GAS - now, Chief!';beanT='Bean: Hitam - Gosong';beanD='Terlalu panas, bean gosong, rasa pahit.';color='#111';}
 else if(t>=210){score=76;phase='FIRST CRACK';msg='<b>Careful, almost too hot.</b> Hold here. Do not add gas.';beanT='Bean: Coklat Gelap - Akhir First Crack';beanD='Aroma coklat kuat. Siap-siap drop.';color='#5a2d0c';}
 else if(t>=200){score=78;phase='FIRST CRACK';msg='<b>Hold temp at '+t+'°C for 1 minute.</b> Do not increase gas. You are close to Specialty, Chief.';beanT='Bean: Coklat Terang - First Crack';beanD='Bunyi krek...krek... Aroma manis keluar. Tahan suhu.';color='#8b4513';}
 else if(t>=190){score=75;phase='YELLOWING';msg='<b>Too cold.</b> Add a little gas to get back to 205°C.';beanT='Bean: Kuning - Yellowing';beanD='Bean mulai kuning, air mulai hilang. Panasin lagi.';color='#d4a017';}
@@ -61,6 +67,9 @@ document.getElementById('coach').innerHTML=msg;
 document.getElementById('beanTitle').textContent=beanT;
 document.getElementById('beanDesc').textContent=beanD;
 document.getElementById('dot').style.background=color;
+document.getElementById('airVal').textContent=airflow+'%';
+document.getElementById('coolVal').textContent=coolOn?'COOLING: ON - KIPAS':'COOLING: OFF';
+document.getElementById('coolBtn').textContent=coolOn?'COOLING: ON':'COOLING: OFF';
 draw();
 }
 function draw(){
@@ -72,8 +81,10 @@ ctx.stroke();
 ctx.fillStyle='#fff';ctx.font='bold 11px Arial';ctx.fillText('GRAFIK SUHU - ROAST CURVE',10,15);
 ctx.fillStyle='#ff7a00';ctx.fillText(t+'°C',400,20);
 }
-function gas(d){t+=d; sec+=5; hist.push(t); if(hist.length>20)hist.shift(); update();}
-function speak(){t-=3; sec+=5; hist.push(t); update(); alert('Voice Command: LOWER GAS - Temp lowered to '+t+'°C');}
+function gas(d){if(coolOn)return; t+=d; sec+=5; hist.push(t); if(hist.length>20)hist.shift(); update();}
+function air(d){airflow=Math.max(0,Math.min(100,airflow+d)); if(!coolOn){t+= (d>0?-1:1); sec+=5; hist.push(t); if(hist.length>20)hist.shift();} update();}
+function cooling(){coolOn=!coolOn; if(coolOn){t-=5; sec+=5; hist.push(t); if(hist.length>20)hist.shift();} update();}
+function speak(){if(coolOn)return; t-=3; sec+=5; hist.push(t); update(); alert('Voice Command: LOWER GAS - Temp lowered to '+t+'°C');}
 update();
 </script>
 </body>
