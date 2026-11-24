@@ -17,10 +17,11 @@ body{background:#0a0a0a;color:#fff;min-height:100vh;display:flex;flex-direction:
 .badge{background:#ff7a00;color:#000;font-weight:900;padding:6px 10px;border-radius:20px;font-size:12px}
 .score{margin-top:12px;background:#000;border-radius:14px;padding:10px;display:flex;justify-content:space-between;font-weight:900}
 .score b{color:#ff7a00}
-.coach{margin-top:12px;background:#fff;color:#000;border-radius:14px;padding:12px;font-size:14px;line-height:1.5}
+.coach{margin-top:12px;background:#fff;color:#000;border-radius:14px;padding:12px;font-size:14px;line-height:1.5;min-height:66px}
 .coach b{color:#d35400}
 .btns{display:flex;gap:10px;margin-top:12px}
-.btn{flex:1;background:#fff;color:#000;border:none;padding:12px;border-radius:12px;font-weight:900}
+.btn{flex:1;background:#fff;color:#000;border:none;padding:12px;border-radius:12px;font-weight:900;cursor:pointer}
+.btn:active{transform:scale(.96)}
 .btn.orange{background:#ff7a00;color:#fff}
 .footer{max-width:480px;text-align:center;font-size:12px;color:#aaa;line-height:1.6;margin-top:10px}
 </style>
@@ -28,11 +29,32 @@ body{background:#0a0a0a;color:#fff;min-height:100vh;display:flex;flex-direction:
 <body>
 <div class="top"><span>Sweet <b>FLAVOR</b></span><span>Clean <b>BODY</b></span></div>
 <div class="glass"><div class="glass-inner">
-<div class="row"><div><div style="font-size:12px;opacity:.7">AI ROAST COACH - CENGKUDU</div><div class="temp">205<small>°C</small></div><div style="font-size:12px">BEAN TEMP - 07:42</div></div><div class="badge">FIRST CRACK</div></div>
-<div class="score"><span>CURRENT SCORE: 78</span><span>TARGET <b>80+</b></span></div>
-<div class="coach"><b>Hold temp at 205°C for 1 minute.</b> Do not increase gas. If it hits 215°C, your score drops to 74 and turns bitter. You are close to Specialty, Chief.</div>
-<div class="btns"><button class="btn">GAS +</button><button class="btn">GAS -</button><button class="btn orange">SPEAK: LOWER GAS</button></div>
+<div class="row"><div><div style="font-size:12px;opacity:.7">AI ROAST COACH - CENGKUDU</div><div class="temp"><span id="temp">205</span><small>°C</small></div><div style="font-size:12px">BEAN TEMP - <span id="time">07:42</span></div></div><div class="badge" id="phase">FIRST CRACK</div></div>
+<div class="score"><span>CURRENT SCORE: <span id="score">78</span></span><span>TARGET <b>80+</b></span></div>
+<div class="coach" id="coach"><b>Hold temp at 205°C for 1 minute.</b> Do not increase gas. You are close to Specialty, Chief.</div>
+<div class="btns"><button class="btn" onclick="gas(1)">GAS +</button><button class="btn" onclick="gas(-1)">GAS -</button><button class="btn orange" onclick="speak()">SPEAK: LOWER GAS</button></div>
 </div></div>
-<div class="footer"><b style="color:#fff">PROTOTYPE UI - Smart Roast Glass for Manual Roaster Cengkudu</b><br>Hands-free, eyes on coffee, info on lens.<br>No 100M machine, chasing SCA Score 80+.</div>
+<div class="footer"><b style="color:#fff">DEMO - Smart Roast Glass for Manual Roaster Cengkudu</b><br>Tap GAS + / GAS - to change temp. Try it for DoraHacks demo.<br>Hands-free, eyes on coffee, info on lens.</div>
+<script>
+let t=205, sec=462;
+function update(){
+document.getElementById('temp').textContent=t;
+let m=String(Math.floor(sec/60)).padStart(2,'0');
+let s=String(sec%60).padStart(2,'0');
+document.getElementById('time').textContent=m+':'+s;
+let score, msg, phase;
+if(t>=215){score=74;phase='TOO HOT';msg='<b>TOO HOT! 215°C!</b> Score drops to 74 and turns bitter. Tap GAS - now, Chief!';}
+else if(t>=210){score=76;phase='FIRST CRACK';msg='<b>Careful, almost too hot.</b> Hold here. Do not add gas.';}
+else if(t>=200){score=78;phase='FIRST CRACK';msg='<b>Hold temp at '+t+'°C for 1 minute.</b> Do not increase gas. You are close to Specialty, Chief.';}
+else if(t>=190){score=75;phase='YELLOWING';msg='<b>Too cold.</b> Add a little gas to get back to 205°C.';}
+else{score=70;phase='DRYING';msg='<b>Way too cold.</b> Tap GAS + to heat up.';}
+document.getElementById('score').textContent=score;
+document.getElementById('phase').textContent=phase;
+document.getElementById('coach').innerHTML=msg;
+}
+function gas(d){t+=d; sec+=5; update();}
+function speak(){t-=3; sec+=5; update(); alert('Voice Command: LOWER GAS - Temp lowered to '+t+'°C');}
+update();
+</script>
 </body>
 </html>
