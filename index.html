@@ -1,55 +1,38 @@
-<div><b id="flavor">Sweet</b><span>FLAVOR</span></div>
-<div><b id="body">Clean</b><span>BODY</span></div>
-</div>
-</div>
-</div>
-</div>
-
-<div class="ai">
-<b>🤖 AI ROAST COACH - CENGKUDU</b>
-<p id="coach">Hold temp at <b>205°C</b> for 1 minute. Do not increase gas. If it hits 215°C, your score drops to 74 and turns bitter. You are close to Specialty, Chief.</p>
-<div style="margin-top:10px">CURRENT SCORE: <span class="score"><span id="sca2">78</span> <span>/ TARGET 80+ SPECIALTY ROBUSTA</span></span></div>
-</div>
-
-<div class="controls">
-<button class="btn-gas" onclick="gas(1)">GAS +</button>
-<button class="btn-gas2" onclick="gas(-1)">GAS -</button>
-</div>
-<div class="controls">
-<button class="btn-voice" onclick="voice()">🎤 SPEAK: "LOWER GAS"</button>
-</div>
-
-<p class="note">PROTOTYPE UI - Smart Roast Glass for Manual Roaster Cengkudu<br>Hands-free, eyes on coffee, info on lens.<br>No 100M machine, chasing SCA Score 80+.</p>
-
-<script>
-let temp=209, sca=78, sec=272, crackIn=45;
-function render(){
-document.getElementById('temp').innerText=temp;
-document.getElementById('sca').innerText=sca;
-document.getElementById('sca2').innerText=sca;
-document.getElementById('tempBar').style.width=Math.min(100,(temp-150)/1.2)+'%';
-document.getElementById('scaBar').style.width=sca+'%';
-let m=Math.floor(sec/60), s=sec%60;
-document.getElementById('time').innerText='0'+m+':'+(s<10?'0'+s:s);
-document.getElementById('phase').innerText='FIRST CRACK • IN '+crackIn+' SEC';
-let coach=document.getElementById('coach');
-if(temp>=215){coach.innerHTML='DANGER! Temp <b>'+temp+'°C</b> too hot. Lower gas now! Your score drops to <b>74</b> and turns bitter / burnt.'; document.getElementById('defect').innerText='High'; document.getElementById('flavor').innerText='Bitter';}
-else if(temp>=210){coach.innerHTML='Perfect! Hold at <b>'+temp+'°C</b>. You are on track <b>78 -> 80+</b>. Do not increase gas for 1 minute.'; document.getElementById('defect').innerText='Low'; document.getElementById('flavor').innerText='Sweet';}
-else if(temp>=200){coach.innerHTML='Good, temp <b>'+temp+'°C</b> is safe. Increase slowly to 209°C for perfect First Crack. Your score rises to <b>'+sca+'</b>.'; document.getElementById('defect').innerText='Low'; document.getElementById('flavor').innerText='Sweet';}
-else{coach.innerHTML='Temp <b>'+temp+'°C</b> too low. Coffee turns earthy, score drops. Increase gas a bit.'; document.getElementById('defect').innerText='Medium'; document.getElementById('flavor').innerText='Earthy';}
-}
-function gas(d){
-temp+=d*3; sec+=5;
-if(d>0){sca=Math.max(68,sca-1); crackIn=Math.max(5,crackIn-8);} else {sca=Math.min(84,sca+1); crackIn+=6;}
-render();
-}
-function voice(){
-temp-=6; sca=Math.min(84,sca+2); crackIn+=10; sec+=5;
-alert('VOICE HEARD: "Lower Gas" - Gas lowered. Temp now '+temp+'°C. Score up to '+sca+'.');
-render();
-}
-setInterval(()=>{sec++; if(crackIn>0) crackIn--; render();},1000);
-render();
-</script>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ROAST MAP - AI Roast Coach Cengkudu</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+body{background:#0a0a0a;color:#fff;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px}
+.top{width:100%;max-width:480px;display:flex;justify-content:space-between;font-weight:900;font-size:14px}
+.top b{color:#ff7a00}
+.glass{width:100%;max-width:480px;background:#ff7a00;border-radius:40px;padding:18px;margin:14px 0}
+.glass-inner{background:#1a1a1a;border-radius:28px;padding:16px}
+.row{display:flex;justify-content:space-between;align-items:center}
+.temp{font-size:64px;font-weight:900;line-height:1}
+.temp small{font-size:20px}
+.badge{background:#ff7a00;color:#000;font-weight:900;padding:6px 10px;border-radius:20px;font-size:12px}
+.score{margin-top:12px;background:#000;border-radius:14px;padding:10px;display:flex;justify-content:space-between;font-weight:900}
+.score b{color:#ff7a00}
+.coach{margin-top:12px;background:#fff;color:#000;border-radius:14px;padding:12px;font-size:14px;line-height:1.5}
+.coach b{color:#d35400}
+.btns{display:flex;gap:10px;margin-top:12px}
+.btn{flex:1;background:#fff;color:#000;border:none;padding:12px;border-radius:12px;font-weight:900}
+.btn.orange{background:#ff7a00;color:#fff}
+.footer{max-width:480px;text-align:center;font-size:12px;color:#aaa;line-height:1.6;margin-top:10px}
+</style>
+</head>
+<body>
+<div class="top"><span>Sweet <b>FLAVOR</b></span><span>Clean <b>BODY</b></span></div>
+<div class="glass"><div class="glass-inner">
+<div class="row"><div><div style="font-size:12px;opacity:.7">AI ROAST COACH - CENGKUDU</div><div class="temp">205<small>°C</small></div><div style="font-size:12px">BEAN TEMP - 07:42</div></div><div class="badge">FIRST CRACK</div></div>
+<div class="score"><span>CURRENT SCORE: 78</span><span>TARGET <b>80+</b></span></div>
+<div class="coach"><b>Hold temp at 205°C for 1 minute.</b> Do not increase gas. If it hits 215°C, your score drops to 74 and turns bitter. You are close to Specialty, Chief.</div>
+<div class="btns"><button class="btn">GAS +</button><button class="btn">GAS -</button><button class="btn orange">SPEAK: LOWER GAS</button></div>
+</div></div>
+<div class="footer"><b style="color:#fff">PROTOTYPE UI - Smart Roast Glass for Manual Roaster Cengkudu</b><br>Hands-free, eyes on coffee, info on lens.<br>No 100M machine, chasing SCA Score 80+.</div>
 </body>
 </html>
